@@ -10,7 +10,7 @@ by [jeffli6789](https://crackmes.one/user/jeffli6789)
 
 ### Peeking into The Maze
 
-This one can be intimidating at first: it's a 1 MB level 4 crackme written in assambler!
+This one can be intimidating at first: it's a 1 MB crackme of pure assembly!
 
 ```
 $ ls -l --block-size=K
