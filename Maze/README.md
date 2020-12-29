@@ -3,15 +3,13 @@
 
 Please try to understand this binary and solve it!
 
-by [jeffli6789](https://crackmes.one/user/jeffli6789)
-[5f009fa233c5d42850709479](https://crackmes.one/crackme/5f009fa233c5d42850709479)
+by [jeffli6789](https://crackmes.one/user/jeffli6789) - [5f009fa233c5d42850709479](https://crackmes.one/crackme/5f009fa233c5d42850709479)
 
 ## Solution
 
 ### Peeking into The Maze
 
 This one can be intimidating at first: it's a 1 MB crackme of pure assembly!
-
 ```
 $ ls -l --block-size=K
 -rwxrwxr-x 1 root root 1057K Jul  4 17:26 maze
@@ -97,10 +95,10 @@ For each value, different constants are loaded into the RBX and RCX registers (+
 ```
 
 The 4 possible execution paths are then (relative to 0x0716d0):
-1: -0x29d2 = -0x1\*0x65\*0x6a
-2: -0x6a   = -0x1\*0x1\*0x6a
-3: +0x6a   =  0x1\*0x1\*0x6a
-4: +0x29d2 =  0x1\*0x65\*0x6a
+1. -0x29d2 = -0x1\*0x65\*0x6a
+2. -0x6a   = -0x1\*0x1\*0x6a
+3. +0x6a   =  0x1\*0x1\*0x6a
+4. +0x29d2 =  0x1\*0x65\*0x6a
 
 Looking at the disassembled code from those addresses, they are either a `return 0` or the exact same code above. The next obvious question is: where is the exit (i.e. non-zero retrun)? This starts looking like a *maze*!
 
@@ -125,7 +123,7 @@ Disassembly powered by [diStorm3](https://github.com/gdabah/distorm).
 ### Finding The Way Out
 
 The only thing left now is to reach the exit following the maze rules. We can find the shortest path to the exit using a [Breadth-first seach](https://en.wikipedia.org/wiki/Breadth-first_search) approach. This is excatly what the [solve.py](solve.py) does.
-```Pyhton
+```Python
 # Maze rules
 pattern = "\x8A\x07\x48\xFF\xC7" # 5 bytes
 dead_end  = "\x31\xC0\xC3" # 3 bytes
@@ -183,6 +181,6 @@ It turns out that I got lucky this time.
 
 ### Conclusions
 
-This is a very creative crackme, where we actually wrote a maze solver in order to get the congratulations message. I enjoyed it 
+This is a very creative crackme, where we actually wrote a maze solver in order to get the congratulations message. I really enjoyed it!
 
 The dissasembly to find the exit code isn't really necessary. Since the binary has a fixed structure, we could have just searched for 3 patterns (`NOP` opcode, the return 0 sequence and the snipet that performs the `JMP`) and only analyse the parts that don't fit in these patterns.
